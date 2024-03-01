@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  database_budjet-app:
+    image: postgres:latest
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: Budgy
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: Budgy_development
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5432"
+
+  web:
+    build: .
+    restart: always
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - database_budjet-app
+
+volumes:
+  db_data: 

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: budgetapp-deployment
+  labels:
+    app: budgetapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: budgetapp
+  template:
+    metadata:
+      labels:
+        app: budgetapp
+    spec:
+      containers:
+        - name: budgetapp
+          image: docker.io/sounak3007/budgetapp:5
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          resources:
+          limits:
+            cpu: "2"
+            memory: "2000Mi"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: budgetapp-svc
+  labels:
+    app: budgetapp    
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: budgetapp
