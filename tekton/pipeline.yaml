@@ -14,4 +14,4 @@ spec:
         - name: pathToDockerfile
           value: /d/Budget-App/Dockerfile
         - name: imageName
-          value: sounak3007/budget-app
+          value: sounak3007/budgetapp
