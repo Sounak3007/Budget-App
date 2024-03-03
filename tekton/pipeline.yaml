@@ -12,6 +12,6 @@ spec:
         name: build-and-push-image
       params:
         - name: pathToDockerfile
-          value: /d/Budget-App/Dockerfile
+          value: /d/Budget-App
         - name: imageName
           value: sounak3007/budgetapp
