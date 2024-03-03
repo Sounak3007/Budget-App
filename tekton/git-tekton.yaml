@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: download-source
+spec:
+  steps:
+  - name: git-clone
+    image: alpine/git
+    resources: {}
+    script: |
+      git clone https://github.com/Sounak3007/Budget-App.git

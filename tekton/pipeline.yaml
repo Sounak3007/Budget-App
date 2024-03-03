@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-and-push-pipeline
+spec:
+  tasks:
+    - name: download-source
+      taskRef:
+        name: download-source
+    - name: build-and-push-image
+      taskRef:
+        name: build-and-push-image
+      params:
+        - name: pathToDockerfile
+          value: /d/Budget-App/Dockerfile
+        - name: imageName
+          value: sounak3007/budget-app

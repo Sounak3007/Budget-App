@@ -1,0 +1,51 @@
+# apiVersion: tekton.dev/v1beta1
+# kind: Task
+# metadata:
+#   name: build-image
+# spec:
+#   steps:
+#   - name: build-and-push
+#     image: gcr.io/kaniko-project/executor:v1.6.0
+#     resources: {}
+#     script: |
+#       /kaniko/executor --context $(workspaces.source.path) --dockerfile $(params.pathToDockerfile) --destination $(params.image)
+
+# ---
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-and-push-image
+spec:
+  params:
+    - name: pathToDockerfile
+      type: string
+    - name: imageName
+      type: string
+  steps:
+    - name: build
+      image: gcr.io/kaniko-project/executor:v1.6.0
+      env:
+        - name: DOCKER_CONFIG
+          value: /kaniko/.docker/
+      args:
+        - "--dockerfile=$(params.pathToDockerfile)"
+        - "--destination=$(params.imageName)"
+        - "--destination=$(params.imageName):latest"
+      volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker/
+    - name: push
+      image: gcr.io/kaniko-project/executor:v1.6.0
+      env:
+        - name: DOCKER_CONFIG
+          value: /kaniko/.docker/
+      args:
+        - "--dockerfile=$(params.pathToDockerfile)"
+        - "--destination=$(params.imageName)"
+        - "--destination=$(params.imageName):latest"
+      volumeMounts:
+        - name: docker-config
+          mountPath: /kaniko/.docker/
+  volumes:
+    - name: docker-config
+      emptyDir: {}
