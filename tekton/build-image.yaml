@@ -29,11 +29,14 @@ spec:
           value: /kaniko/.docker/
       args:
         - "--dockerfile=$(params.pathToDockerfile)"
+        - "--context=/workspace/"
         - "--destination=$(params.imageName)"
         - "--destination=$(params.imageName):latest"
       volumeMounts:
         - name: docker-config
           mountPath: /kaniko/.docker/
+        - name: context
+          mountPath: /workspace/
     - name: push
       image: gcr.io/kaniko-project/executor:v1.6.0
       env:
@@ -41,11 +44,17 @@ spec:
           value: /kaniko/.docker/
       args:
         - "--dockerfile=$(params.pathToDockerfile)"
+        - "--context=/workspace/"
         - "--destination=$(params.imageName)"
         - "--destination=$(params.imageName):latest"
       volumeMounts:
         - name: docker-config
           mountPath: /kaniko/.docker/
+        - name: context
+          mountPath: /workspace/
   volumes:
     - name: docker-config
       emptyDir: {}
+    - name: context
+      hostPath:
+        path: Budget-App/tekton

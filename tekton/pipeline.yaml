@@ -12,6 +12,6 @@ spec:
         name: build-and-push-image
       params:
         - name: pathToDockerfile
-          value: tekton
+          value: ./Dockerfile
         - name: imageName
           value: sounak3007/budgetapp
