@@ -49,7 +49,7 @@ spec:
           workspace: git-source
       params:
         - name: url
-          value: "$(params.gitUrl)"
+          value: "https://github.com/Sounak3007/Budget-App.git"
         - name: revision
           value: "$(params.gitRevision)"
         - name: subdirectory
