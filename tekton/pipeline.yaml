@@ -1,16 +1,62 @@
-# 
+# # 
+
+# apiVersion: tekton.dev/v1beta1
+# kind: PipelineRun
+# metadata:
+#   generateName: build-and-push
+# spec:
+#   pipelineRef:
+#     name: build-and-push-pipeline
+#   resources:
+#     - name: source-repo
+#       resourceRef:
+#         name: source-repo
+#     - name: docker-image
+#       resourceRef:
+#         name: docker-image
 
 apiVersion: tekton.dev/v1beta1
-kind: PipelineRun
+kind: Pipeline
 metadata:
-  generateName: build-and-push
+  name: build-and-push-image
 spec:
-  pipelineRef:
-    name: build-and-push-pipeline
-  resources:
-    - name: source-repo
-      resourceRef:
-        name: source-repo
-    - name: docker-image
-      resourceRef:
-        name: docker-image
+  tasks:
+    - name: clone-repo
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: https://github.com/Sounak3007/Budget-App.git
+        - name: revision
+          value: master
+        - name: deleteExisting
+          value: "true"
+      workspaces:
+        - name: output
+          emptyDir: {}
+    - name: build-image
+      taskRef:
+        name: buildah-build
+      params:
+        - name: IMAGE
+          value: sounak3007/budgetapp:latest
+        - name: DOCKERFILE
+          value: /workspace/output/Dockerfile
+      resources:
+        inputs:
+          - name: source
+            type: git
+            resourceSpec:
+              type: git
+              params:
+                - name: revision
+                  value: master
+      workspaces:
+        - name: source
+          workspace: output
+    - name: push-image
+      taskRef:
+        name: buildah-push
+      params:
+        - name: IMAGE
+          value: sounak3007/budgetapp:latest

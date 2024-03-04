@@ -63,22 +63,48 @@
 #       emptyDir: {}
 
 apiVersion: tekton.dev/v1beta1
-kind: Task
+kind: Pipeline
 metadata:
-  name: build-and-push
+  name: build-and-push-image
 spec:
-  steps:
-    - name: build-and-push
-      image: docker.io/library/docker
-      command: ["sh", "-c"]
-      args: ["docker build -t $(outputs.params.IMAGE) . && docker push $(outputs.params.IMAGE)"]
-      env:
-        - name: DOCKER_BUILDKIT
-          value: "1"
+  tasks:
+    - name: clone-repo
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: https://github.com/Sounak3007/Budget-App.git
+        - name: revision
+          value: master
+        - name: deleteExisting
+          value: "true"
+      workspaces:
+        - name: output
+          emptyDir: {}
+    - name: build-image
+      taskRef:
+        name: buildah-build
+      params:
+        - name: IMAGE
+          value: sounak3007/budgetapp:latest
+        - name: DOCKERFILE
+          value: /workspace/output/Dockerfile
       resources:
         inputs:
           - name: source
             type: git
-        outputs:
-          - name: image
-            type: image
+            resourceSpec:
+              type: git
+              params:
+                - name: revision
+                  value: master
+      workspaces:
+        - name: source
+          workspace: output
+    - name: push-image
+      taskRef:
+        name: buildah-push
+      params:
+        - name: IMAGE
+          value: sounak3007/budgetapp:latest
+
