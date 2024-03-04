@@ -18,45 +18,70 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: build-and-push-image
+  name: build-and-deploy-pipeline
 spec:
+  workspaces:
+    - name: git-source
+      description: The git repo
+  params:
+    - name: gitUrl
+      description: Git repository url
+      value: https://github.com/Sounak3007/Budget-App.git
+    - name: gitRevision
+      description: Git revision to check out
+      default: master
+    - name: pathToContext
+      description: The path to the build context, used by Kaniko - within the workspace
+      default: src
+    - name: pathToYamlFile
+      description: The path to the yaml file to deploy within the git source
+    - name: imageUrl
+      description: Image name including repository
+      value: docker.io/sounak3007/budgetapp
+    - name: imageTag
+      description: Image tag
+      default: "latest"
   tasks:
     - name: clone-repo
       taskRef:
         name: git-clone
-      params:
-        - name: url
-          value: https://github.com/Sounak3007/Budget-App.git
-        - name: revision
-          value: master
-        - name: deleteExisting
-          value: "true"
       workspaces:
         - name: output
-          # emptyDir: {}
-    - name: build-image
-      taskRef:
-        name: buildah-build
+          workspace: git-source
       params:
-        - name: IMAGE
-          value: sounak3007/budgetapp:latest
-        - name: DOCKERFILE
-          value: /workspace/output/Dockerfile
-      resources:
-        inputs:
-          - name: source
-            type: git
-            resources:
-              type: git
-              params:
-                - name: revision
-                  value: master
+        - name: url
+          value: "$(params.gitUrl)"
+        - name: revision
+          value: "$(params.gitRevision)"
+        - name: subdirectory
+          value: "."
+        - name: deleteExisting
+          value: "true"
+    - name: source-to-image
+      taskRef:
+        name: kaniko
+      runAfter:
+        - clone-repo
       workspaces:
         - name: source
-          workspace: output
-    - name: push-image
-      taskRef:
-        name: buildah-push
+          workspace: git-source
       params:
+        - name: CONTEXT
+          value: $(params.pathToContext)
         - name: IMAGE
-          value: sounak3007/budgetapp:latest
+          value: $(params.imageUrl):$(params.imageTag)
+    # - name: deploy-to-cluster
+    #   taskRef:
+    #     name: deploy-using-kubectl
+    #   workspaces:
+    #     - name: git-source
+    #       workspace: git-source
+    #   params:
+    #     - name: pathToYamlFile
+    #       value: $(params.pathToYamlFile)
+    #     - name: imageUrl
+    #       value: $(params.imageUrl)
+    #     - name: imageTag
+    #       value: $(params.imageTag)
+    #     - name: imageDigest
+    #       value: $(tasks.source-to-image.results.IMAGE-DIGEST)
