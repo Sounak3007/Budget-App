@@ -33,7 +33,7 @@ spec:
           value: "true"
       workspaces:
         - name: output
-          emptyDir: {}
+          # emptyDir: {}
     - name: build-image
       taskRef:
         name: buildah-build
