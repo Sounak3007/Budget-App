@@ -8,5 +8,5 @@ spec:
   workspaces:
     - name: Sounak3007/Budget-App
       persistentVolumeClaim:
-        claimName: tmpfs
+        claimName: my-pvc
 
