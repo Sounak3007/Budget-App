@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: build-and-deploy-pipeline-run
+spec:
+  pipelineRef:
+    name: build-and-deploy-pipeline
+  workspaces:
+    - name: Sounak3007/Budget-App
+      persistentVolumeClaim:
+        claimName: app
