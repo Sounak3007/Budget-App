@@ -8,4 +8,5 @@ spec:
   workspaces:
     - name: Sounak3007/Budget-App
       persistentVolumeClaim:
-        claimName: app
+        claimName: tmpfs
+
