@@ -21,7 +21,7 @@ metadata:
   name: build-and-deploy-pipeline
 spec:
   workspaces:
-    - name: git-source
+    - name: Sounak3007/Budget-App
       description: The git repo
   params:
     - name: gitUrl
@@ -46,7 +46,7 @@ spec:
         name: git-clone
       workspaces:
         - name: output
-          workspace: git-source
+          workspace: Sounak3007/Budget-App
       params:
         - name: url
           value: "https://github.com/Sounak3007/Budget-App.git"
@@ -62,8 +62,8 @@ spec:
       runAfter:
         - clone-repo
       workspaces:
-        - name: git-source
-          workspace: git-source
+        - name: Sounak3007/Budget-App
+          workspace: Sounak3007/Budget-App
       params:
         - name: CONTEXT
           value: $(params.pathToContext)
