@@ -9,7 +9,6 @@ spec:
     - name: Sounak3007/Budget-App
       persistentVolumeClaim:
         claimName: mypvc
-        emptyDir: {}
         
         # apiVersion: v1
         # kind: PersistentVolumeClaim
