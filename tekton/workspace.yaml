@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: create-workspace
+spec:
+  params:
+    - name: workspace
+      type: string
+  steps:
+    - name: create-workspace
+      image: ubuntu
+      command: ["/bin/sh", "-c"]
+      args:
+        - mkdir -p /workspace/$(params.workspaceName)
+  volumes:
+    - name: workspace
+      emptyDir: {}

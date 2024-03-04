@@ -1,11 +1,35 @@
-apiVersion: tekton.dev/v1beta1
-kind: Task
+# apiVersion: tekton.dev/v1beta1
+# kind: Task
+# metadata:
+#   name: download-source
+# spec:
+#   steps:
+#   - name: git-clone
+#     image: alpine/git
+#     resources: {}
+#     script: |
+#       git clone https://github.com/Sounak3007/Budget-App.git
+
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
 metadata:
-  name: download-source
+  name: source-repo
 spec:
-  steps:
-  - name: git-clone
-    image: alpine/git
-    resources: {}
-    script: |
-      git clone https://github.com/Sounak3007/Budget-App.git
+  type: git
+  params:
+    - name: revision
+      value: master
+    - name: url
+      value: https://github.com/Sounak3007/Budget-App.git
+
+---
+
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: docker-image
+spec:
+  type: image
+  params:
+    - name: url
+      value: docker.io/sounak3007/budgetapp
