@@ -25,7 +25,7 @@ spec:
       description: The git repo
   params:
     - name: gitUrl
-      value: https://github.com/Sounak3007/Budget-App.git
+      value: "https://github.com/Sounak3007/Budget-App.git"
     - name: gitRevision
       description: Git revision to check out
       default: master
