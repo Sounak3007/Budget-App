@@ -62,7 +62,7 @@ spec:
       runAfter:
         - clone-repo
       workspaces:
-        - name: source
+        - name: git-source
           workspace: git-source
       params:
         - name: CONTEXT
