@@ -26,7 +26,7 @@ spec:
   params:
     - name: gitUrl
       description: Git repository url
-      value: https://github.com/Sounak3007/Budget-App.git
+      default: https://github.com/Sounak3007/Budget-App.git
     - name: gitRevision
       description: Git revision to check out
       default: master
@@ -37,7 +37,7 @@ spec:
       description: The path to the yaml file to deploy within the git source
     - name: imageUrl
       description: Image name including repository
-      value: docker.io/sounak3007/budgetapp
+      default: docker.io/sounak3007/budgetapp
     - name: imageTag
       description: Image tag
       default: "latest"
