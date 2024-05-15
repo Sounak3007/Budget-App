@@ -1,9 +1,9 @@
-version: '3.8'
+version: "4.5"
 
 services:
   database_budjet-app:
     image: postgres:latest
-    container_name: db
+    container_name: database_budjet-app
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
@@ -16,6 +16,7 @@ services:
 
   web:
     image: docker.io/sounak3007/budgetapp:5
+    container_name: webapp
     restart: always
     volumes:
       - .:/app

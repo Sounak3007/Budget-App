@@ -31,7 +31,6 @@ COPY /db/migrate /app/db/migrate
 # Expose port 3000 to the outside world
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 # Set the entrypoint
-ENTRYPOINT ["entrypoint.sh"]
 EXPOSE 3000 3001
 # Start the Rails server when the container launches
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
