@@ -3,6 +3,7 @@ version: '3.8'
 services:
   database_budjet-app:
     image: postgres:latest
+    container_name: db
     volumes:
       - db_data:/var/lib/postgresql/data
     environment:
@@ -11,10 +12,10 @@ services:
       POSTGRES_DB: Budgy_development
       POSTGRES_HOST_AUTH_METHOD: trust
     ports:
-      - "5432"
+      - "5432:5432"
 
   web:
-    build: .
+    image: docker.io/sounak3007/budgetapp:5
     restart: always
     volumes:
       - .:/app

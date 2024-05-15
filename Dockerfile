@@ -29,7 +29,9 @@ COPY /db/migrate /app/db/migrate
 # RUN bundle exec rake db:setup RAILS_ENV=development
 # RUN bundle exec rails webpacker:install
 # Expose port 3000 to the outside world
-EXPOSE 3000
-
+COPY entrypoint.sh /usr/bin/entrypoint.sh
+# Set the entrypoint
+ENTRYPOINT ["entrypoint.sh"]
+EXPOSE 3000 3001
 # Start the Rails server when the container launches
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
