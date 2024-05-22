@@ -4,6 +4,9 @@ metadata:
   name: budgetapp-deployment
   labels:
     app: budgetapp
+  annotations: 
+    sidecar.speedscale.com/cpu-request: 200m
+    sidecar.speedscale.com/cpu-limit: 500m
 spec:
   replicas: 1
   selector:

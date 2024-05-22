@@ -16,3 +16,7 @@ spec:
       target:
         type: Utilization
         averageUtilization: 20
+
+
+#test autoscaling 
+#kubectl exec -it budgetapp-deployment-7549b6fddb-xvb5v -- bash -c " while sleep 0.01s; do wget http://localhost:3000; done"
