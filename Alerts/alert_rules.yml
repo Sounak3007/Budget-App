@@ -1,0 +1,11 @@
+groups:
+- name: Downtime alert
+  rules:
+    - alert: Microservices alert
+      expr: probe_success == 0
+      for: 2m
+      labels:
+        severity: "critical"
+      annotations:
+        title: "{{ $labels.environmemt }} is not healthy for 2m"
+        description: "{{ $labels.environmemt }} or blackbox exporter is down"

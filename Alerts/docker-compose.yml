@@ -1,0 +1,63 @@
+version: '3.1'
+
+volumes:
+    prometheus_data: {}
+
+services:
+
+  prometheus:
+    image: prom/prometheus:v2.19.1
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+        #  - ./prometheus_data:/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=15d'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    ports:
+      - 9090:9090
+    links:
+      - alertmanager:alertmanager
+    restart: always
+
+  # alertmanager:
+  #   image: prom/alertmanager:v0.21.0
+  #   ports:
+  #     - 9093:9093
+  #   volumes:
+  #     - ./alertmanager/:/etc/alertmanager/
+  #   restart: always
+  #   command:
+  #     - '--config.file=/etc/alertmanager/alertmanager.yml'
+  #     - '--storage.path=/alertmanager'
+  #     - '--web.external-url=http://localhost:9093'
+
+  grafana:
+    image: grafana/grafana:7.1.4
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana_data:/var/lib/grafana
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    links:
+      - prometheus:prometheus
+    restart: always
+    # env_file:
+    #   - config.monitoring
+  # blackbox-exporter:
+  #         image: prom/blackbox-exporter
+  #         restart: unless-stopped
+  #         volumes:
+  #                 - ./blackbox:/blackbox
+  #         command:
+  #                 - '--config.file=/blackbox/blackbox.yml'
+  #         ports:
+  #                 - "9115:9115"

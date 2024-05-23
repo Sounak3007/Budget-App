@@ -7,6 +7,9 @@ metadata:
   annotations: 
     sidecar.speedscale.com/cpu-request: 200m
     sidecar.speedscale.com/cpu-limit: 500m
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "9090"
+    prometheus.io/path: "/metrics"
 spec:
   replicas: 1
   selector:
