@@ -43,7 +43,7 @@ This project is build with:
 - Write a dockerfile for the application 
 
 ### Dockerfile:
-
+```
 FROM ruby:3.1.2
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
 WORKDIR /app
@@ -59,7 +59,7 @@ COPY /db/migrate /app/db/migrate
 COPY entrypoint.sh /usr/bin/entrypoint.sh
 EXPOSE 3000 3001
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
-
+```
 ## Step 2 :
 
 - Build the docker image 
@@ -71,12 +71,12 @@ CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
 
 - Deploy the containers using docker-compose file
 
-  Docker compose file for deploying the backend database and the application containers under the same docker network. Services with image postgres:latest and the previously build application image and pushed to docker hub image: docker.io/sounak3007/budgetapp:5 is used for deploying the sevices.  
+Docker compose file for deploying the backend database and the application containers under the same docker network. Services with image postgres:latest and the previously build application image and pushed to docker hub image: docker.io/sounak3007/budgetapp:5 is used for deploying the sevices.  
 
-  command - docker-compose up 
+command - docker-compose up 
 
 ### Docker-Compose file:
-
+```
 version: "4.5"
 
 services:
@@ -106,7 +106,7 @@ services:
 
 volumes:
   db_data: 
-
+```
 ## Step 4 :
 
 - Verify if the app is running by visiting http://localhost:3000
@@ -128,7 +128,7 @@ Write a deployment yaml file for the application to be deployed in the kubernete
 file path - ./kubedeploy/k8-deploy.yaml
 
 ### Deploymemt file :
-
+```
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -160,9 +160,9 @@ spec:
             limits:
               cpu: "1"
               memory: "1000Mi"
-
+```
 - Kubernetes service type Load Balancer deployment yaml :
-
+```
   apiVersion: v1
   kind: Service
   metadata:
@@ -178,7 +178,7 @@ spec:
         name: http
     selector:
       app: budgetapp
-
+```
 ## Step 3 :
 
 - Configure yaml file for Horizontal Pod autoscaler.
@@ -186,7 +186,7 @@ spec:
   Values file path for deployment - ./kubedeploy/HPA.yaml
 
   yaml file config :
-
+```
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -205,7 +205,7 @@ spec:
       target:
         type: Utilization
         averageUtilization: 20
-    
+   ``` 
 - Deploy the pod to kubernetes using the following command :
 
   kubectl apply -f ./kubedeploy/k8-deploy.yaml
@@ -250,7 +250,7 @@ spec:
 - Write the following terrafrom files for prometheus and Grafana deployment to your kubernetes cluster
 
 - grafana.tf
-
+```
 resource "helm_release" "grafana" {
   name       = "grafana"
   repository = "https://grafana.github.io/helm-charts"
@@ -271,9 +271,9 @@ resource "helm_release" "grafana" {
     value = "false"  # Enable or disable persistent storage
   }
 }
-
+```
 - prometheus.tf
-
+```
 resource "helm_release" "prometheus" {
   name       = "prometheus"
   repository = "https://prometheus-community.github.io/helm-charts"
@@ -313,9 +313,9 @@ resource "helm_release" "prometheus" {
     })
   }
 }
-
+```
 - providers.tf
-
+```
 provider "kubernetes" {
   config_path = "C:/Users/Lenovo/.kube/config"
 }
@@ -325,7 +325,7 @@ provider "helm" {
     config_path = "C:/Users/Lenovo/.kube/config"
   }
 }
-
+```
 ## Terraform commands to deploy the monitoring tools - grafana and prometheus 
 
 cd /Terraform
