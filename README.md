@@ -11,6 +11,9 @@
   - register and log in, so that the data is private to them.
   - introduce new transactions associated with a category.
   - see the money spent on each category.
+  - Deploy as containers using Dockerfile and Docker compose
+  - Deploy backend database using Helm charts
+  - Deploy Monitoring tools grafana and prometheus using Terraform. 
 
 ### Screenshots 📸
 
