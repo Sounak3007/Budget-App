@@ -64,7 +64,7 @@ CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
   command to build the docker image - docker build -t sounak3007/budgetapp:5 .
   command to push the docker image to docker hub - docker push sounak3007/budgetapp:5 
 
-Step 3 : 
+## Step 3 : 
 
 - Deploy the containers using docker-compose file
 
@@ -178,7 +178,8 @@ spec:
 
 ## Step 3 :
 
-- Configure Horizontal Pod autoscaler.
+- Configure yaml file for Horizontal Pod autoscaler.
+  
   Values file path for deployment - ./kubedeploy/HPA.yaml
 
   yaml file config :
