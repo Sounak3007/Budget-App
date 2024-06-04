@@ -340,6 +340,19 @@ variable "namespace" {
   default = "monitoring"
 }
 ```
+- Verify the installation
+
+```
+kubectl get pods 
+kubectl get svc 
+```
+
+### Note: If you are getting an error for the prometheus node exporter pod use the follwing command 
+
+```
+kubectl patch ds prometheus-prometheus-node-exporter --type "json" -p '[{"op": "remove", "path" : "/spec/template/spec/containers/0/volumeMounts/2/mountPropagation"}]'
+```
+
 ## Terraform commands to deploy the monitoring tools - grafana and prometheus 
 
 cd /Terraform
