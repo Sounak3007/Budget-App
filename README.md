@@ -36,7 +36,7 @@ This project is build with:
 -  Terraform
 -  Monitoring tools - grafana, prometheus
 
-# Docker deployment 
+# Containerize the web application: 
 
 ## Step 1 : 
 
@@ -111,7 +111,7 @@ volumes:
 
 - Verify if the app is running by visiting http://localhost:3000
 
-# kubernetes-cluster-setup
+# Design Kubernetes deployment:
 
 ## Step 1 :
 
@@ -161,6 +161,7 @@ spec:
               cpu: "1"
               memory: "1000Mi"
 ```
+## Implement Kubernetes service:
 - Kubernetes service type Load Balancer deployment yaml :
 ```
   apiVersion: v1
@@ -179,7 +180,7 @@ spec:
     selector:
       app: budgetapp
 ```
-## Step 3 :
+## Step 3 : Configure application scaling:
 
 - Configure yaml file for Horizontal Pod autoscaler.
   
