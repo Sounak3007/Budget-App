@@ -128,7 +128,8 @@ Write a deployment yaml file for the application to be deployed in the kubernete
 file path - ./kubedeploy/k8-deploy.yaml
 
 ### Deploymemt file :
-  apiVersion: apps/v1
+
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: budgetapp-deployment
@@ -159,7 +160,7 @@ spec:
             limits:
               cpu: "1"
               memory: "1000Mi"
----
+
 - Kubernetes service type Load Balancer deployment yaml :
 
   apiVersion: v1
@@ -240,4 +241,7 @@ spec:
 
 - Screenshot 
 
-<img width="959" alt="image" src="https://github.com/Sounak3007/Budget-App/assets/118169528/9d5129bd-0d01-4793-9254-e123641637d6">
+<img width="900" alt="image" src="https://github.com/Sounak3007/Budget-App/assets/118169528/9d5129bd-0d01-4793-9254-e123641637d6">
+
+## Monitoring tool deployment using Terraform 
+
