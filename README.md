@@ -27,6 +27,11 @@ This project is build with:
 
 -  ![Ruby](https://img.shields.io/badge/-Ruby-000000?style=flat&logo=ruby&logoColor=red)
 -  ![Ruby on Rails](https://img.shields.io/badge/-Ruby_on_Rails-000000?style=flat&logo=ruby-on-rails&logoColor=blue)
+-  Docker
+-  Kuberbetes deployments
+-  Helm Chart deployments
+-  Terraform
+-  Monitoring tools - grafana, prometheus
 
 # Docker deployment 
 
