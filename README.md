@@ -178,7 +178,36 @@ spec:
 
 ## Step 3 :
 
-- Deploy the pod to kubernetes using the following command : 
+- Configure Horizontal Pod autoscaler.
+  Values file path for deployment - ./kubedeploy/HPA.yaml
+
+  yaml file config :
+
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: backend-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: budgetapp-deployment
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 20
+
+
+- test autoscaling
+  
+  kubectl exec -it budgetapp-deployment-7549b6fddb-xvb5v -- bash -c " while sleep 0.01s; do wget http://localhost:3000; done"
+
+- Deploy the pod to kubernetes using the following command :
 
   kubectl apply -f ./kubedeploy/k8-deploy.yaml 
 
