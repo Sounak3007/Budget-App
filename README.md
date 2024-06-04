@@ -202,15 +202,15 @@ spec:
       target:
         type: Utilization
         averageUtilization: 20
+    
+- Deploy the pod to kubernetes using the following command :
 
-
+  kubectl apply -f ./kubedeploy/k8-deploy.yaml
+  kubectl apply -f ./kubedeploy/HPA.yaml
+  
 - test autoscaling
   
   kubectl exec -it budgetapp-deployment-7549b6fddb-xvb5v -- bash -c " while sleep 0.01s; do wget http://localhost:3000; done"
-
-- Deploy the pod to kubernetes using the following command :
-
-  kubectl apply -f ./kubedeploy/k8-deploy.yaml 
 
 - verify the deployments by using the following commands :
   
