@@ -125,8 +125,7 @@ Write a deployment yaml file for the application to be deployed in the kubernete
 file path - ./kubedeploy/k8-deploy.yaml
 
 ### Deploymemt file :
-
-apiVersion: apps/v1
+  apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: budgetapp-deployment
