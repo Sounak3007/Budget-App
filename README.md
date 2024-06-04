@@ -219,4 +219,17 @@ spec:
   
   visit http://localhost:3000/ to verify if the application is running. 
 
+## CI/CD GitOps using ArgoCD 
 
+- Installing ArgoCD
+
+  kubectl create namespace argocd
+  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+- Expose Argo CD with load balaner
+
+  kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+
+- Screenshot 
+
+<img width="959" alt="image" src="https://github.com/Sounak3007/Budget-App/assets/118169528/9d5129bd-0d01-4793-9254-e123641637d6">
