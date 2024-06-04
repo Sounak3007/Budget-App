@@ -72,9 +72,9 @@ CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
 - Deploy the containers using docker-compose file
 
 Docker compose file for deploying the backend database and the application containers under the same docker network. Services with image postgres:latest and the previously build application image and pushed to docker hub image: docker.io/sounak3007/budgetapp:5 is used for deploying the sevices.  
-
+```
 command - docker-compose up 
-
+```
 ### Docker-Compose file:
 ```
 version: "4.5"
@@ -118,9 +118,9 @@ volumes:
 - Using helm charts to deploy the postgres sql database pod to the kubernetes cluster 
 
   helm command :
-
-  helm install pgsql bitnami/postgresql   --set auth.username=Budgy   --set auth.database=Budgy_development  --set auth.enablePostgresUser=true   --set global.auth.database=Budgy_development   --set auth.password=password   --set global.auth.username=Budgy   --set primary.persistence.size=1Gi   --set image.tag=16.0.0-debian-11-r15
-
+```
+helm install pgsql bitnami/postgresql   --set auth.username=Budgy   --set auth.database=Budgy_development  --set auth.enablePostgresUser=true   --set global.auth.database=Budgy_development   --set auth.password=password   --set global.auth.username=Budgy   --set primary.persistence.size=1Gi   --set image.tag=16.0.0-debian-11-r15
+```
 ## Step 2 :
 
 Write a deployment yaml file for the application to be deployed in the kubernetes cluster.
@@ -207,36 +207,38 @@ spec:
         averageUtilization: 20
    ``` 
 - Deploy the pod to kubernetes using the following command :
-
+```
   kubectl apply -f ./kubedeploy/k8-deploy.yaml
   kubectl apply -f ./kubedeploy/HPA.yaml
-  
+```  
 - test autoscaling
-  
-  kubectl exec -it budgetapp-deployment-7549b6fddb-xvb5v -- bash -c " while sleep 0.01s; do wget http://localhost:3000; done"
-
+```
+kubectl exec -it budgetapp-deployment-7549b6fddb-xvb5v -- bash -c " while sleep 0.01s; do wget http://localhost:3000; done"
+```
 - verify the deployments by using the following commands :
-  
+  ```
   kubectl get pods
   kubectl get svc
   helm list 
-  
+  ```
   visit http://localhost:3000/ to verify if the application is running. 
 
 ## CI/CD GitOps using ArgoCD 
 
 - Installing ArgoCD
-
+    ```
   1. kubectl create namespace argocd
   
   2. kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-
+    ```
 - Expose Argo CD with load balaner
-
+  ```
   kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
-  
-- Get Argo CD password - kubectl get secret argocd-initial-admin-secret -o jsonpath={".data.password"} -n argocd | base64 --decode
-  
+  ```
+- Get Argo CD password -
+  ```
+  kubectl get secret argocd-initial-admin-secret -o jsonpath={".data.password"} -n argocd | base64 --decode
+  ```
 - Visit the url - https://localhost:80
 
 - Screenshot 
@@ -329,10 +331,10 @@ provider "helm" {
 ## Terraform commands to deploy the monitoring tools - grafana and prometheus 
 
 cd /Terraform
-
+```
 - terraform init
 - terraform plan
 - terraform apply 
-
+```
 - Expose the prometheus server using Kubectl : 
   kubectl expose svc prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-nodeport
