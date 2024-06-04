@@ -348,5 +348,7 @@ cd /Terraform
 - terraform plan
 - terraform apply 
 ```
-- Expose the prometheus server using Kubectl : 
+- Expose the prometheus server using Kubectl :
+  ```
   kubectl expose svc prometheus-server --type=NodePort --target-port=9090 --name=prometheus-server-nodeport
+  ```
