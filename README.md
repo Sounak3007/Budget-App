@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Budget-App
+# Budget-App deployment using Docker, Kubernetes, Terraform and Helm charts.  
 
 ## Description
 
