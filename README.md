@@ -63,10 +63,10 @@ CMD ["rails", "server", "-b", "0.0.0.0", "-p", "3000"]
 ## Step 2 :
 
 - Build the docker image 
-
+```
   command to build the docker image - docker build -t sounak3007/budgetapp:5 .
   command to push the docker image to docker hub - docker push sounak3007/budgetapp:5 
-
+```
 ## Step 3 : 
 
 - Deploy the containers using docker-compose file
@@ -326,6 +326,18 @@ provider "helm" {
   kubernetes {
     config_path = "C:/Users/Lenovo/.kube/config"
   }
+}
+```
+- variables.tf
+```
+  variable "kube_config" {
+  type    = string
+  default = "C:/Users/Lenovo/.kube/config"
+}
+
+variable "namespace" {
+  type    = string
+  default = "monitoring"
 }
 ```
 ## Terraform commands to deploy the monitoring tools - grafana and prometheus 
