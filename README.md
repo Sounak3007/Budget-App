@@ -230,6 +230,10 @@ spec:
 - Expose Argo CD with load balaner
 
   kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "LoadBalancer"}}'
+  
+- Get Argo CD password - kubectl get secret argocd-initial-admin-secret -o jsonpath={".data.password"} -n argocd | base64 --decode
+  
+- Visit the url - https://localhost:80
 
 - Screenshot 
 
