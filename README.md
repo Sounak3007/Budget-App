@@ -223,8 +223,9 @@ spec:
 
 - Installing ArgoCD
 
-  kubectl create namespace argocd
-  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  1. kubectl create namespace argocd
+  
+  2. kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
 - Expose Argo CD with load balaner
 
