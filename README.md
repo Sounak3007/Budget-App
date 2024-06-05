@@ -13,17 +13,7 @@
   - see the money spent on each category.
   - Deploy as containers using Dockerfile and Docker compose
   - Deploy backend database using Helm charts
-  - Deploy Monitoring tools grafana and prometheus using Terraform. 
-
-### Screenshots 📸
-
-    Categories
-![](./app/assets/images/img1.png) 
-
-
-    Category-Details 
-![](./app/assets/images/img5.png) 
-
+  - Deploy Monitoring tools grafana and prometheus using Terraform.
 ## Built With 🛠️
 
 This project is build with:
@@ -35,6 +25,15 @@ This project is build with:
 -  Helm Chart deployments
 -  Terraform
 -  Monitoring tools - grafana, prometheus
+
+### Screenshots 📸
+
+    Categories
+![](./app/assets/images/img1.png) 
+
+
+    Category-Details 
+![](./app/assets/images/img5.png) 
 
 # Containerize the web application: 
 
